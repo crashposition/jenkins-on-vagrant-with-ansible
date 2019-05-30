@@ -1,0 +1,41 @@
+---
+- name: Install Java 8 dependency
+  apt:
+    name: openjdk-8-jre
+    state: present
+    update_cache: yes
+
+- name: Add the Jenkins apt repository key
+  apt_key: 
+    url: https://pkg.jenkins.io/debian-stable/jenkins.io.key 
+    state: present
+
+- name: Ensure the repository is configured
+  apt_repository: 
+    repo: 'deb https://pkg.jenkins.io/debian-stable binary/'
+    state: present
+
+- name: Install Jenkins
+  apt: 
+    name: jenkins
+
+- name: Start Jenkins
+  service: 
+    name: jenkins
+    state: started
+
+- name: Wait for initialAdminPassword to be generated
+  wait_for:
+    path: "/var/lib/jenkins/secrets/initialAdminPassword"
+
+- name: Stash the password
+  command: cat /var/lib/jenkins/secrets/initialAdminPassword
+  register: pw
+
+- name: Display Jenkins login instructions
+  debug:
+    msg: "Jenkins is installed. To get started, open http://localhost/login and enter your Administrator password: {{ pw.stdout }}"
+
+
+
+
