@@ -15,9 +15,8 @@ Deploys [Jenkins](https://jenkins.io/) using [Ansible](https://www.ansible.com/)
 
 ### Start here
 
-1. Uncompress the contents of the .zip file.
-2. Open the root folder in your Terminal.
-3. Run: ```vagrant up ```
+1. Open the root folder in your Terminal.
+2. Run: ```vagrant up ```
 
 ---
 
